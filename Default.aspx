@@ -3,7 +3,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div >
-        <p>Hello</p>
+        <asp:Label runat="server" ID="errStr"></asp:Label>
+         <asp:Literal ID="DynamicTable" runat="server"></asp:Literal>
     </div>
 
 </asp:Content>
