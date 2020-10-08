@@ -67,13 +67,16 @@ namespace Assignment1_GetOrderInfoFromNewegg
 
             try
             {
+                // create request
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                // specify the method
+                httpWebRequest.Method = method;
+                // add info in header
                 httpWebRequest.Headers.Add("Authorization", auth);
                 httpWebRequest.Headers.Add("SecretKey", key);
                 httpWebRequest.Accept = dataFormat;
                 httpWebRequest.ContentType = dataFormat;
-                httpWebRequest.Method = method;
-
+                // add request body
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     ReqBody reqBody = new ReqBody();
@@ -95,7 +98,9 @@ namespace Assignment1_GetOrderInfoFromNewegg
                     streamWriter.Write(json);
                 }
 
+                // get response
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                // read response
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     JsonSerializer jsonSerializer = new JsonSerializer();
@@ -104,6 +109,7 @@ namespace Assignment1_GetOrderInfoFromNewegg
 
                     foreach (var orderinfo in resBody.ResponseBody.OrderInfoList)
                     {
+                        // add the info to table
                         dt.Rows.Add(orderinfo.OrderNumber, orderinfo.ShipToFirstName,orderinfo.ShipToAddress1,orderinfo.ShipToZipCode,orderinfo.ShipToCountryCode);
                     }
                 }
